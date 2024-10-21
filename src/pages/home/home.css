@@ -1,0 +1,18 @@
+@media only screen and (max-width: 750px) {
+  .main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100svh;
+    width: 100svw;
+    background-color: black;
+    color: white;
+  }
+
+  .home-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+}

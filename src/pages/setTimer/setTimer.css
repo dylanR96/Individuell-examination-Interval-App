@@ -1,0 +1,46 @@
+@media only screen and (max-width: 750px) {
+  .main-setTimer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    color: black;
+  }
+
+  .page-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 10px;
+  }
+
+  .minutes-setter {
+    display: flex;
+  }
+
+  .minute-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .checkboxes {
+    display: flex;
+    gap: 10px;
+  }
+
+  .checkbox-titles {
+    display: flex;
+    gap: 10px;
+  }
+}

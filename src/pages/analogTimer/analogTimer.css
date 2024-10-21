@@ -1,0 +1,48 @@
+@media only screen and (max-width: 750px) {
+  .main-analogTimer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    color: black;
+  }
+  .stopwatch-container {
+    width: 6rem;
+    height: 6rem;
+    position: relative;
+  }
+
+  .stopwatch {
+    width: 6rem;
+    height: 6rem;
+    border: 1px solid black;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .stopwatch-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: black;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .stopwatch-pointer {
+    width: 2.5rem;
+    height: 0.3rem;
+    background-color: black;
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: translateX(-50%);
+  }
+}

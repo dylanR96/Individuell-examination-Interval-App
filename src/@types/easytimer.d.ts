@@ -7,7 +7,7 @@ declare module 'easytimer.js' {
     addEventListener(event: string, callback: () => void): void;
     getTimeValues(): {
       hours: number;
-      minutes: NumberConstructor;
+      minutes: number;
       seconds: number;
       toString: () => string;
     } 

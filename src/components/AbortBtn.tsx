@@ -1,8 +1,11 @@
+import { useTimeContext } from "../contexts/TimerContext";
+
 const AbortBtn = () => {
+  const { resetTimer } = useTimeContext();
   return (
     <>
       <div>
-        <button>ABORT TIMER</button>
+        <button onClick={resetTimer}>ABORT TIMER</button>
       </div>
     </>
   );

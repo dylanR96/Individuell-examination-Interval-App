@@ -2,14 +2,12 @@ import { useState } from "react";
 import Menu from "../../components/Menu";
 import "./setTimer.css";
 import { useTimeContext } from "../../contexts/TimerContext";
-import { useNavigate } from "@tanstack/react-router";
-import AnalogTimer from "../analogTimer/AnalogTimer";
+import { Link } from "@tanstack/react-router";
 
 const SetTimer = () => {
   const [timerValue, setTimerValues] = useState(10);
   const [minuteValue, setMinutValue] = useState("minutes");
   const { setTimerValue: setContextTimerValue } = useTimeContext();
-  const navigate = useNavigate();
 
   const updateMinuteLabel = (newValue: number) => {
     setMinutValue(newValue === 1 ? "minute" : "minutes");
@@ -26,7 +24,6 @@ const SetTimer = () => {
   const startTimer = () => {
     console.log("Setting context timer value to:", timerValue);
     setContextTimerValue(timerValue);
-    navigate(<AnalogTimer />);
   };
 
   return (
@@ -55,8 +52,9 @@ const SetTimer = () => {
                 <p>5 min break/ interval</p>
               </div>
             </div>
-
-            <button onClick={startTimer}>START TIMER</button>
+            <Link onClick={startTimer} to="/templateAnalog">
+              START TIMER
+            </Link>
           </div>
         </div>
       </div>

@@ -1,0 +1,24 @@
+@media only screen and (max-width: 750px) {
+  .main-textTimer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: white;
+    color: black;
+  }
+
+  .page-content-textTimer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 10px;
+  }
+
+  .main__remaining-textTime {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+}

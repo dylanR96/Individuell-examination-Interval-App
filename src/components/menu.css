@@ -6,7 +6,7 @@
   display: block;
   cursor: pointer;
   padding: 10px;
-  z-index: 1001; /* Make sure the icon is above the overlay */
+  z-index: 1001;
 }
 
 .hamburger {

@@ -70,4 +70,22 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .main-pause-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    color: white;
+  }
+
+  .pause-screen-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 10px;
+  }
 }

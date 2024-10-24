@@ -7,9 +7,9 @@ interface PauseBtnProps {
 const PauseBtn: React.FC<PauseBtnProps> = ({ onClick }) => {
   const { pauseTimer } = useTimeContext();
   const handleClick = () => {
-    pauseTimer(); // Start the timer
+    pauseTimer();
     if (onClick) {
-      onClick(); // Call the provided onClick function, if it exists
+      onClick();
     }
   };
   return (

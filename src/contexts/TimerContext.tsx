@@ -28,7 +28,7 @@ export const useTimeContext = (): TimerContextType => {
 };
 
 export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [remainingTime, setRemainingTime] = useState("00:00:00");
+  const [remainingTime, setRemainingTime] = useState("00:00");
   const [running, setRunning] = useState(false);
   const myTimer = useRef(new Timer());
 
@@ -51,7 +51,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     myTimer.current.addEventListener("secondsUpdated", updateRemainingTime);
     myTimer.current.addEventListener("targetAchieved", () => {
-      setRemainingTime("00:00:00");
+      setRemainingTime("00:00");
       setRunning(false);
     });
   };
@@ -70,11 +70,9 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const resetTimer = () => {
-    console.log(running);
-
     myTimer.current.reset();
     myTimer.current.stop();
-    setRemainingTime("00:00:00");
+    setRemainingTime("00:00");
     setRunning(false);
   };
 

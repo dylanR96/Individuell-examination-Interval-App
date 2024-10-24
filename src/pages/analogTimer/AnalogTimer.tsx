@@ -6,6 +6,7 @@ import "./analogTimer.css";
 import { motion } from "framer-motion";
 import PauseBtn from "../../components/PauseBtn";
 import ResumeBtn from "../../components/ResumeBtn";
+import PauseIcon from "../../assets/PauseIcon";
 
 const AnalogTimer: React.FC = () => {
   const { remainingTime, setRemainingTime } = useTimeContext();
@@ -16,6 +17,7 @@ const AnalogTimer: React.FC = () => {
 
   useEffect(() => {
     const [minutes, seconds] = remainingTime.split(":").map(Number);
+
     const totalSeconds = minutes * 60 + seconds;
 
     const totalRotationMin = (totalSeconds / 3600) * 360;
@@ -28,7 +30,7 @@ const AnalogTimer: React.FC = () => {
       setRotationSec(totalRotationSec);
     }
 
-    if (!hasStarted && remainingTime !== "00:00:00") {
+    if (!hasStarted && remainingTime !== "00:00") {
       setHasStarted(true);
     }
   }, [remainingTime, hasStarted, paused]);
@@ -47,7 +49,9 @@ const AnalogTimer: React.FC = () => {
   }, [hasStarted, paused]);
 
   const clickPause = () => {
-    setPaused((prevPaused) => !prevPaused);
+    if (remainingTime !== "00:00") {
+      setPaused((prevPaused) => !prevPaused);
+    }
   };
 
   const clickResume = () => {
@@ -57,48 +61,59 @@ const AnalogTimer: React.FC = () => {
   const clickAbort = () => {
     setPaused(false);
     setHasStarted(false);
-    setRemainingTime("00:00:00");
+    setRemainingTime("00:00");
     setRotationSec(0);
     setRotationMin(0);
   };
 
   return (
     <>
-      <div className="main-analogTimer">
-        <div>
-          <Menu />
-        </div>
-        <div className="page-content-analogtimer">
-          <div className="remaining-time">{remainingTime}</div>
-          <div className="stopwatch-container">
-            <div className="stopwatch">
-              <div className="stopwatch-dot"></div>
-              <motion.div
-                className="stopwatch-pointer-sec"
-                animate={{ rotate: rotationSec }}
-                transition={{
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 20,
-                  duration: hasStarted ? 1 : 0,
-                }}
-              />
-              <motion.div
-                className="stopwatch-pointer-min"
-                animate={{ rotate: rotationMin }}
-                transition={{
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 20,
-                }}
-              />
-            </div>
+      {!paused ? (
+        <div className="main-analogTimer">
+          <div>
+            <Menu />
           </div>
-          <AbortBtn onClick={clickAbort} />
-          <PauseBtn onClick={clickPause} />
-          <ResumeBtn onClick={clickResume} />
+          <div className="page-content-analogtimer">
+            <div className="remaining-time">{remainingTime}</div>
+            <div className="stopwatch-container">
+              <div className="stopwatch">
+                <div className="stopwatch-dot"></div>
+                <motion.div
+                  className="stopwatch-pointer-sec"
+                  animate={{ rotate: rotationSec }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 20,
+                    duration: hasStarted ? 1 : 0,
+                  }}
+                />
+                <motion.div
+                  className="stopwatch-pointer-min"
+                  animate={{ rotate: rotationMin }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 20,
+                  }}
+                />
+              </div>
+            </div>
+            <AbortBtn onClick={clickAbort} />
+            <PauseBtn onClick={clickPause} />
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="main-pause-page">
+          <div className="pause-screen-content">
+            <PauseIcon />
+            <h2>Pause & breath</h2>
+            <div>{remainingTime}</div>
+
+            <ResumeBtn onClick={clickResume} />
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -1,22 +1,21 @@
 import { useTimeContext } from "../contexts/TimerContext";
 
 interface PauseBtnProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const PauseBtn: React.FC<PauseBtnProps> = ({ onClick }) => {
   const { pauseTimer } = useTimeContext();
+  const handleClick = () => {
+    pauseTimer(); // Start the timer
+    if (onClick) {
+      onClick(); // Call the provided onClick function, if it exists
+    }
+  };
   return (
     <>
       <div>
-        <button
-          onClick={() => {
-            pauseTimer();
-            onClick();
-          }}
-        >
-          PAUSE TIMER
-        </button>
+        <button onClick={handleClick}>PAUSE TIMER</button>
       </div>
     </>
   );

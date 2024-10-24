@@ -15,7 +15,7 @@ const SetTimer = () => {
 
   const changeTimerValue = (delta: number) => {
     const newValue = timerValue + delta;
-    if (newValue >= 0) {
+    if (newValue >= 0 && newValue < 60 && newValue !== 0) {
       setTimerValues(newValue);
       updateMinuteLabel(newValue);
     }
@@ -29,32 +29,48 @@ const SetTimer = () => {
   return (
     <>
       <div className="main-setTimer">
-        <div className="navbar">
+        <div>
           <Menu />
         </div>
-        <div className="page-content">
+        <div className="page-content-setTimer">
           <div className="minutes-setter">
-            <button onClick={() => changeTimerValue(-1)}>&lt;</button>
+            <button
+              className="main__minute-btns"
+              onClick={() => changeTimerValue(-1)}
+            >
+              &lt;
+            </button>
             <div className="minute-display">
-              <div>{timerValue}</div>
+              <div className="main__minutes-value">{timerValue}</div>
               <div>{minuteValue}</div>
             </div>
-            <button onClick={() => changeTimerValue(+1)}>&gt;</button>
+            <button
+              className="main__minute-btns"
+              onClick={() => changeTimerValue(+1)}
+            >
+              &gt;
+            </button>
           </div>
-          <div>
+          <div className="main__options-container">
             <div className="options">
-              <div className="checkboxes">
-                <input type="checkbox" />
+              <div className="checkboxes-container">
+                <input className="checkboxes" type="checkbox" />
                 <p>Intervals</p>
               </div>
               <div className="checkbox-titles">
-                <input type="checkbox" />
+                <input className="checkboxes" type="checkbox" />
                 <p>5 min break/ interval</p>
               </div>
             </div>
-            <Link onClick={startTimer} to="/templateAnalog">
-              START TIMER
-            </Link>
+            <div className="main__btn-container">
+              <Link
+                className="main__start-timer-btn"
+                onClick={startTimer}
+                to="/templateAnalog"
+              >
+                START TIMER
+              </Link>
+            </div>
           </div>
         </div>
       </div>

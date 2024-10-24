@@ -16,13 +16,14 @@ const AnalogTimer: React.FC = () => {
 
   useEffect(() => {
     const [minutes, seconds] = remainingTime.split(":").map(Number);
-
     const totalSeconds = minutes * 60 + seconds;
 
     const totalRotationMin = (totalSeconds / 3600) * 360;
-    const totalRotationSec = (totalSeconds % 60) * 6;
-
     setRotationMin(totalRotationMin);
+
+    const totalRotationSec = (totalSeconds / 600) * 3600;
+
+    setRotationSec(totalRotationSec);
     if (hasStarted && !paused) {
       setRotationSec(totalRotationSec);
     }
@@ -30,20 +31,19 @@ const AnalogTimer: React.FC = () => {
     if (!hasStarted && remainingTime !== "00:00:00") {
       setHasStarted(true);
     }
-    console.log(remainingTime);
   }, [remainingTime, hasStarted, paused]);
 
   useEffect(() => {
     if (hasStarted && !paused) {
       const interval = setInterval(() => {
-        setRotationSec((prevRotationSec) => prevRotationSec + 6);
-        setHasStarted(true);
+        setRotationSec((prevRotationSec) => {
+          const newRotationSec = prevRotationSec - 3600 / 600;
+          return newRotationSec < 0 ? 3600 + newRotationSec : newRotationSec;
+        });
       }, 1000);
 
       return () => clearInterval(interval);
     }
-    console.log(hasStarted);
-    console.log(paused);
   }, [hasStarted, paused]);
 
   const clickPause = () => {
@@ -65,12 +65,11 @@ const AnalogTimer: React.FC = () => {
   return (
     <>
       <div className="main-analogTimer">
-        <div className="main-nav">
-          <Menu />
-          interval
-        </div>
         <div>
-          <div>{remainingTime}</div>
+          <Menu />
+        </div>
+        <div className="page-content-analogtimer">
+          <div className="remaining-time">{remainingTime}</div>
           <div className="stopwatch-container">
             <div className="stopwatch">
               <div className="stopwatch-dot"></div>

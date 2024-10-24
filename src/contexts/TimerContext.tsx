@@ -38,6 +38,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const setTimerValue = (newValue: number) => {
+    console.log("Starting timer with value:", newValue);
     myTimer.current.stop();
 
     myTimer.current.start({
@@ -47,16 +48,19 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
     setRemainingTime(`${newValue}:00`);
     setRunning(true);
+
     myTimer.current.addEventListener("secondsUpdated", updateRemainingTime);
     myTimer.current.addEventListener("targetAchieved", () => {
       setRemainingTime("00:00:00");
       setRunning(false);
     });
   };
+
   const startTimer = () => {
     if (!running) {
       myTimer.current.start();
       setRunning(true);
+      myTimer.current.addEventListener("secondsUpdated", updateRemainingTime);
     }
   };
 

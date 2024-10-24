@@ -1,22 +1,22 @@
 import { useTimeContext } from "../contexts/TimerContext";
 
 interface ResumeBtnProps {
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const ResumeBtn: React.FC<ResumeBtnProps> = ({ onClick }) => {
   const { startTimer } = useTimeContext();
+
+  const handleClick = () => {
+    startTimer();
+    if (onClick) {
+      onClick();
+    }
+  };
   return (
     <>
       <div>
-        <button
-          onClick={() => {
-            startTimer();
-            onClick();
-          }}
-        >
-          RESUME TIMER
-        </button>
+        <button onClick={handleClick}>RESUME TIMER</button>
       </div>
     </>
   );

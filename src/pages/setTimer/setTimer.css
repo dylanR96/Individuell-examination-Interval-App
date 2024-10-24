@@ -8,7 +8,7 @@
     color: black;
   }
 
-  .page-content {
+  .page-content-setTimer {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,6 +27,25 @@
     align-items: center;
   }
 
+  .main__minutes-value {
+    font-size: 4rem;
+    font-weight: 600;
+  }
+
+  .main__minute-btns {
+    border: none;
+    background: none;
+    color: black;
+    font-size: 2rem;
+  }
+
+  .main__options-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
   .options {
     display: flex;
     flex-direction: column;
@@ -34,13 +53,35 @@
     gap: 10px;
   }
 
-  .checkboxes {
+  .checkboxes-container {
     display: flex;
     gap: 10px;
+  }
+
+  .checkboxes {
+    background-color: white;
   }
 
   .checkbox-titles {
     display: flex;
     gap: 10px;
+  }
+
+  .main__btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+  }
+
+  .main__start-timer-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px black;
+    width: 10rem;
+    height: 3rem;
+    color: black;
+    border-radius: 10px;
   }
 }

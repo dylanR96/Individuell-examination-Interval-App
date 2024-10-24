@@ -6,9 +6,22 @@
     width: 100vw;
     background-color: white;
     color: black;
+  }
+
+  .page-content-analogtimer {
+    display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 10px;
   }
+
+  .remaining-time {
+    font-size: 4rem;
+    font-weight: 600;
+  }
+
   .stopwatch-container {
     position: relative;
     width: 200px;

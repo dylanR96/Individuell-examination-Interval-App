@@ -1,6 +1,7 @@
 import AbortBtn from "../../components/AbortBtn";
 import Menu from "../../components/Menu";
 import PauseBtn from "../../components/PauseBtn";
+import ResumeBtn from "../../components/ResumeBtn";
 import { useTimeContext } from "../../contexts/TimerContext";
 import "./digitalTimer.css";
 
@@ -12,16 +13,12 @@ const DigitalTimer = () => {
       <div className="main-digitalTimer">
         <div className="main-nav">
           <Menu />
-          interval
         </div>
-        <div>
-          <div className="stopwatch-container">
-            <div className="stopwatch">
-              <div>{remainingTime}</div>
-            </div>
-          </div>
+        <div className="page-content-digitaltimer">
+          <div className="main__remaining-time">{remainingTime}</div>
           <AbortBtn />
           <PauseBtn />
+          <ResumeBtn />
         </div>
       </div>
     </>

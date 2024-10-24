@@ -9,9 +9,10 @@ import React, {
 
 interface TimerContextType {
   remainingTime: string;
+  setRemainingTime: (value: string) => void;
   setTimerValue: (value: number) => void;
   startTimer: () => void;
-  stopTimer: () => void;
+  pauseTimer: () => void;
   resetTimer: () => void;
   myTimer: Timer;
 }
@@ -33,7 +34,6 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const updateRemainingTime = () => {
     const { minutes, seconds } = myTimer.current.getTimeValues();
-    console.log(`Updating time: ${minutes}:${seconds}`);
     setRemainingTime(`${minutes}:${seconds.toString().padStart(2, "0")}`);
   };
 
@@ -60,16 +60,16 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     }
   };
 
-  const stopTimer = () => {
-    myTimer.current.stop();
+  const pauseTimer = () => {
+    myTimer.current.pause();
     setRunning(false);
   };
 
   const resetTimer = () => {
     console.log(running);
 
-    myTimer.current.stop();
     myTimer.current.reset();
+    myTimer.current.stop();
     setRemainingTime("00:00:00");
     setRunning(false);
   };
@@ -78,9 +78,10 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     <TimerContext.Provider
       value={{
         remainingTime,
+        setRemainingTime,
         setTimerValue,
         startTimer,
-        stopTimer,
+        pauseTimer,
         resetTimer,
         myTimer: myTimer.current,
       }}

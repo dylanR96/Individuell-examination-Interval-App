@@ -1,11 +1,22 @@
 import { useTimeContext } from "../contexts/TimerContext";
 
-const PauseBtn = () => {
-  const { stopTimer } = useTimeContext();
+interface PauseBtnProps {
+  onClick: () => void;
+}
+
+const PauseBtn: React.FC<PauseBtnProps> = ({ onClick }) => {
+  const { pauseTimer } = useTimeContext();
   return (
     <>
       <div>
-        <button onClick={stopTimer}>PAUSE TIMER</button>
+        <button
+          onClick={() => {
+            pauseTimer();
+            onClick();
+          }}
+        >
+          PAUSE TIMER
+        </button>
       </div>
     </>
   );

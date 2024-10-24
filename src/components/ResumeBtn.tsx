@@ -1,25 +1,25 @@
 import { useTimeContext } from "../contexts/TimerContext";
 
-interface AbortBtnProps {
+interface ResumeBtnProps {
   onClick: () => void;
 }
 
-const AbortBtn: React.FC<AbortBtnProps> = ({ onClick }) => {
-  const { resetTimer } = useTimeContext();
+const ResumeBtn: React.FC<ResumeBtnProps> = ({ onClick }) => {
+  const { startTimer } = useTimeContext();
   return (
     <>
       <div>
         <button
           onClick={() => {
-            resetTimer();
+            startTimer();
             onClick();
           }}
         >
-          ABORT TIMER
+          RESUME TIMER
         </button>
       </div>
     </>
   );
 };
 
-export default AbortBtn;
+export default ResumeBtn;

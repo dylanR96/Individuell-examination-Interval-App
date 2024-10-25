@@ -43,15 +43,15 @@ const TextTimer = () => {
   };
 
   const timeText = (minutes: number, seconds: number) => {
-    const minuteText =
-      numberToWords(minutes) + (minutes === 1 ? " MINUTE" : " MINUTES");
-    const secondsText =
-      numberToWords(seconds) + (seconds === 1 ? " SECOND" : " SECONDS");
+    const minuteWord = numberToWords(minutes);
+    const secondWord = numberToWords(seconds);
+    const minuteText = minuteWord + (minutes === 1 ? " MINUTE" : " MINUTES");
+    const secondsText = secondWord + (seconds === 1 ? " SECOND" : " SECONDS");
     return `${minuteText} AND ${secondsText}`;
   };
 
   const [minutes, seconds] = remainingTime.split(":").map(Number);
-  const timeTextss = timeText(minutes, seconds);
+  const timeTextResult = timeText(minutes, seconds);
 
   return (
     <>
@@ -64,7 +64,7 @@ const TextTimer = () => {
             <Menu />
           </div>
           <div className="page-content-textTimer">
-            <div className="main__remaining-textTime">{timeTextss}</div>
+            <div className="main__remaining-textTime">{timeTextResult}</div>
             <AbortBtn onClick={clickAbort} />
             <PauseBtn onClick={clickPause} />
           </div>

@@ -38,7 +38,6 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   };
 
   const setTimerValue = (newValue: number) => {
-    console.log("Starting timer with value:", newValue);
     myTimer.current.stop();
 
     myTimer.current.start({

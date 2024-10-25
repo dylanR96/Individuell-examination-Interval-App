@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AbortBtn from "../../components/AbortBtn";
 import Menu from "../../components/Menu";
 import PauseBtn from "../../components/PauseBtn";
-import ResumeBtn from "../../components/ResumeBtn";
 import { useTimeContext } from "../../contexts/TimerContext";
-import PauseIcon from "../../assets/PauseIcon";
 import "./textTimer.css";
 import { numberToWords } from "../../utilities/NumberToWords";
+import PauseScreen from "../../components/PauseScreen";
+import TimesUp from "../../components/TimesUp";
+
 const TextTimer = () => {
-  const { remainingTime } = useTimeContext();
+  const { remainingTime, setRemainingTime } = useTimeContext();
   const [paused, setPaused] = useState(false);
+  const [isTimerComplete, setIsTimerComplete] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  useEffect(() => {
+    if (!hasStarted && remainingTime !== "00:00") {
+      setHasStarted(true);
+    }
+
+    if (hasStarted && remainingTime === "00:00") {
+      setIsTimerComplete(true);
+      setHasStarted(false);
+    }
+  }, [remainingTime, hasStarted]);
 
   const clickPause = () => {
     if (remainingTime !== "00:00") {
@@ -19,6 +33,13 @@ const TextTimer = () => {
 
   const clickResume = () => {
     setPaused(false);
+  };
+
+  const clickAbort = () => {
+    setPaused(false);
+    setHasStarted(false);
+    setRemainingTime("00:00");
+    setIsTimerComplete(false);
   };
 
   const timeText = (minutes: number, seconds: number) => {
@@ -34,27 +55,22 @@ const TextTimer = () => {
 
   return (
     <>
-      {!paused ? (
+      {" "}
+      {isTimerComplete ? (
+        <TimesUp />
+      ) : !paused ? (
         <div className="main-textTimer">
           <div className="main-nav">
             <Menu />
           </div>
-          <div className="page-content-textTimer ">
+          <div className="page-content-textTimer">
             <div className="main__remaining-textTime">{timeTextss}</div>
-            <AbortBtn />
+            <AbortBtn onClick={clickAbort} />
             <PauseBtn onClick={clickPause} />
           </div>
         </div>
       ) : (
-        <div className="main-pause-page">
-          <div className="pause-screen-content">
-            <PauseIcon />
-            <h2>Pause & breath</h2>
-            <div>{remainingTime}</div>
-
-            <ResumeBtn onClick={clickResume} />
-          </div>
-        </div>
+        <PauseScreen onClick={clickResume} />
       )}
     </>
   );

@@ -22,7 +22,6 @@ const SetTimer = () => {
   };
 
   const startTimer = () => {
-    console.log("Setting context timer value to:", timerValue);
     setContextTimerValue(timerValue);
   };
 

@@ -5,8 +5,8 @@ import { useTimeContext } from "../../contexts/TimerContext";
 import "./analogTimer.css";
 import { motion } from "framer-motion";
 import PauseBtn from "../../components/PauseBtn";
-import ResumeBtn from "../../components/ResumeBtn";
-import PauseIcon from "../../assets/PauseIcon";
+import TimesUp from "../../components/TimesUp";
+import PauseScreen from "../../components/PauseScreen";
 
 const AnalogTimer: React.FC = () => {
   const { remainingTime, setRemainingTime } = useTimeContext();
@@ -14,6 +14,7 @@ const AnalogTimer: React.FC = () => {
   const [rotationSec, setRotationSec] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [isTimerComplete, setIsTimerComplete] = useState(false);
 
   useEffect(() => {
     const [minutes, seconds] = remainingTime.split(":").map(Number);
@@ -32,6 +33,11 @@ const AnalogTimer: React.FC = () => {
 
     if (!hasStarted && remainingTime !== "00:00") {
       setHasStarted(true);
+    }
+
+    if (hasStarted && remainingTime === "00:00") {
+      setIsTimerComplete(true);
+      setHasStarted(false);
     }
   }, [remainingTime, hasStarted, paused]);
 
@@ -64,11 +70,14 @@ const AnalogTimer: React.FC = () => {
     setRemainingTime("00:00");
     setRotationSec(0);
     setRotationMin(0);
+    setIsTimerComplete(false);
   };
 
   return (
     <>
-      {!paused ? (
+      {isTimerComplete ? (
+        <TimesUp />
+      ) : !paused ? (
         <div className="main-analogTimer">
           <div>
             <Menu />
@@ -104,15 +113,7 @@ const AnalogTimer: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="main-pause-page">
-          <div className="pause-screen-content">
-            <PauseIcon />
-            <h2>Pause & breath</h2>
-            <div>{remainingTime}</div>
-
-            <ResumeBtn onClick={clickResume} />
-          </div>
-        </div>
+        <PauseScreen onClick={clickResume} />
       )}
     </>
   );

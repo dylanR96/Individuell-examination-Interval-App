@@ -7,6 +7,7 @@ import { Link } from "@tanstack/react-router";
 const SetTimer = () => {
   const [timerValue, setTimerValues] = useState(10);
   const [minuteValue, setMinutValue] = useState("minutes");
+  const [repeatTimer, setRepeatTimer] = useState(false);
   const { setTimerValue: setContextTimerValue } = useTimeContext();
 
   const updateMinuteLabel = (newValue: number) => {
@@ -15,14 +16,14 @@ const SetTimer = () => {
 
   const changeTimerValue = (delta: number) => {
     const newValue = timerValue + delta;
-    if (newValue >= 0 && newValue < 60 && newValue !== 0) {
+    if (newValue >= 1 && newValue < 60 && newValue !== 0) {
       setTimerValues(newValue);
       updateMinuteLabel(newValue);
     }
   };
 
   const startTimer = () => {
-    setContextTimerValue(timerValue);
+    setContextTimerValue(timerValue, repeatTimer);
   };
 
   return (
@@ -53,12 +54,13 @@ const SetTimer = () => {
           <div className="main__options-container">
             <div className="options">
               <div className="checkboxes-container">
-                <input className="checkboxes" type="checkbox" />
+                <input
+                  className="checkboxes"
+                  type="checkbox"
+                  checked={repeatTimer}
+                  onChange={() => setRepeatTimer((prev) => !prev)}
+                />
                 <p>Intervals</p>
-              </div>
-              <div className="checkbox-titles">
-                <input className="checkboxes" type="checkbox" />
-                <p>5 min break/ interval</p>
               </div>
             </div>
             <div className="main__btn-container">

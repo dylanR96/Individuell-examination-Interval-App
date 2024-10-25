@@ -88,4 +88,29 @@
     flex-grow: 1;
     gap: 10px;
   }
+
+  .main__times-up {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    color: white;
+  }
+
+  .times-up-screen-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 20px;
+  }
+
+  .main__times-up-btn {
+    border: 1px solid gray;
+    padding: 1rem;
+    border-radius: 10px;
+    color: white;
+  }
 }

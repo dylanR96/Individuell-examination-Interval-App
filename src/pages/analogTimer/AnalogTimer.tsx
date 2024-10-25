@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import AbortBtn from "../../components/AbortBtn";
 import Menu from "../../components/Menu";
 import { useTimeContext } from "../../contexts/TimerContext";
@@ -10,25 +10,26 @@ import PauseScreen from "../../components/PauseScreen";
 
 const AnalogTimer: React.FC = () => {
   const { remainingTime, setRemainingTime } = useTimeContext();
-  const [rotationMin, setRotationMin] = useState(0);
-  const [rotationSec, setRotationSec] = useState(0);
   const [hasStarted, setHasStarted] = useState(false);
   const [paused, setPaused] = useState(false);
   const [isTimerComplete, setIsTimerComplete] = useState(false);
 
+  const minutesPointer = useRef<HTMLDivElement | null>(null);
+  const secondsPointer = useRef<HTMLDivElement | null>(null);
+
+  const highestValue = 60;
+
   useEffect(() => {
     const [minutes, seconds] = remainingTime.split(":").map(Number);
 
-    const totalSeconds = minutes * 60 + seconds;
+    const minutesRemaining = highestValue - minutes;
+    const secondsRemaining = highestValue - seconds;
 
-    const totalRotationMin = (totalSeconds / 3600) * 360;
-    setRotationMin(totalRotationMin);
-
-    const totalRotationSec = (totalSeconds / 600) * 3600;
-
-    setRotationSec(totalRotationSec);
-    if (hasStarted && !paused) {
-      setRotationSec(totalRotationSec);
+    if (minutesPointer.current) {
+      minutesPointer.current.style.transform = `rotate(${minutesRemaining * 6}deg)`;
+    }
+    if (secondsPointer.current) {
+      secondsPointer.current.style.transform = `rotate(${secondsRemaining * 6}deg)`;
     }
 
     if (!hasStarted && remainingTime !== "00:00") {
@@ -39,20 +40,27 @@ const AnalogTimer: React.FC = () => {
       setIsTimerComplete(true);
       setHasStarted(false);
     }
-  }, [remainingTime, hasStarted, paused]);
 
-  useEffect(() => {
+    let interval: number | undefined;
     if (hasStarted && !paused) {
-      const interval = setInterval(() => {
-        setRotationSec((prevRotationSec) => {
-          const newRotationSec = prevRotationSec - 3600 / 600;
-          return newRotationSec < 0 ? 3600 + newRotationSec : newRotationSec;
+      interval = window.setInterval(() => {
+        setRemainingTime((prev) => {
+          const [min, sec] = prev.split(":").map(Number);
+          if (sec > 0) {
+            return `${min}:${String(sec - 1).padStart(2, "0")}`;
+          } else if (min > 0) {
+            return `${min - 1}:59`;
+          } else {
+            return "00:00";
+          }
         });
       }, 1000);
-
-      return () => clearInterval(interval);
     }
-  }, [hasStarted, paused]);
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [remainingTime, hasStarted, paused, setRemainingTime]);
 
   const clickPause = () => {
     if (remainingTime !== "00:00") {
@@ -68,9 +76,6 @@ const AnalogTimer: React.FC = () => {
     setPaused(false);
     setHasStarted(false);
     setRemainingTime("00:00");
-    setRotationSec(0);
-    setRotationMin(0);
-    setIsTimerComplete(false);
   };
 
   return (
@@ -88,22 +93,17 @@ const AnalogTimer: React.FC = () => {
               <div className="stopwatch">
                 <div className="stopwatch-dot"></div>
                 <motion.div
+                  ref={secondsPointer}
                   className="stopwatch-pointer-sec"
-                  animate={{ rotate: rotationSec }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 20,
-                    duration: hasStarted ? 1 : 0,
+                  style={{
+                    transformOrigin: "bottom center",
                   }}
                 />
                 <motion.div
+                  ref={minutesPointer}
                   className="stopwatch-pointer-min"
-                  animate={{ rotate: rotationMin }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 20,
+                  style={{
+                    transformOrigin: "bottom center",
                   }}
                 />
               </div>

@@ -10,7 +10,7 @@ import React, {
 interface TimerContextType {
   remainingTime: string;
   setRemainingTime: (value: string) => void;
-  setTimerValue: (value: number) => void;
+  setTimerValue: (value: number, repeat: boolean) => void;
   startTimer: () => void;
   pauseTimer: () => void;
   resetTimer: () => void;
@@ -37,7 +37,7 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setRemainingTime(`${minutes}:${seconds.toString().padStart(2, "0")}`);
   };
 
-  const setTimerValue = (newValue: number) => {
+  const setTimerValue = (newValue: number, repeat: boolean) => {
     myTimer.current.stop();
 
     myTimer.current.start({
@@ -52,6 +52,9 @@ export const MyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     myTimer.current.addEventListener("targetAchieved", () => {
       setRemainingTime("00:00");
       setRunning(false);
+      if (repeat) {
+        setTimerValue(newValue, repeat);
+      }
     });
   };
 
